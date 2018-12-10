@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Greedy Cashier</title>
+</head>
+<body>
+
+	<h4>Greedy Cashier Project</h4>
+	<p>Use the least number of coins to give back change</p>
+
+	<script type="text/javascript">
+		coinsAvailable = [25, 10, 5, 1];
+
+		function getChangeVal() {
+			var changeRequired = 32,
+			coinCounter = 0;
+
+			//check recursively for changeRequired > coinsAvailable[i]
+			//When true update coins counter and subtract coin value from 
+			//changeRequired
+			//
+			coinsAvailable.sort(function(a,b){
+				return b-a;
+			});
+
+			console.log("coinsAvailable", coinsAvailable);
+			
+			while(changeRequired > 0){
+				for(var i=0; i<coinsAvailable.length; i++){
+					if(changeRequired >= coinsAvailable[i]){
+						coinCounter ++;
+						changeRequired = changeRequired - coinsAvailable[i];
+						i=coinsAvailable.length;
+					}
+				}
+			}
+
+
+			console.log("coinCounter", coinCounter);
+		}
+
+		getChangeVal();
+
+	</script>
+
+</body>
+</html>
