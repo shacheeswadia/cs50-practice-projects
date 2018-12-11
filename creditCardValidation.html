@@ -13,62 +13,77 @@
 		5. If the final resulting sum is a number endind in zero, it is a valid credit card number
 	-->
 
+	<h1>Credit Card Validation</h1>
+
+	<label for="ccNumber">Enter a 15 digit credit card number</label>
+	<input type="text" minlength="15" maxlength="15" name="ccnumber" id="ccNumber">
+	<input type="submit" name="submit" onclick="validate()">
+
+	<div id="numValidation">
+	</div>
+
 	<script type="text/javascript">
+
+		function validate(){
 		
-		var ccno = 242718907652866,
-		myNosString = ccno.toString(),
-		myNosArr = [];
+			var ccno = document.getElementById('ccNumber').value,  //242718907652866
+			myNosString = ccno.toString(),
+			myNosArr = [];
 
-		//Get an array with each number as an element of that array
-		for(var i=0; i<myNosString.length; i++){
-			myNosArr[i] = parseInt(myNosString[i]);
-		}
-
-		console.log("myNosArr", myNosArr);
-		
-		//Find the second last digit that is 14th digit which will be at position 13 in the array
-		var Alternate1 = [], 
-			Alternate2 = [];
-
-		for(var j = myNosArr.length-1, i=0, k=0; j>=0; j--){
-			if(j%2 !== 0){
-				Alternate1[i] = myNosArr[j];
-				i++;
-			}else{
-				Alternate2[k] = myNosArr[j];
-				k++;
+			//Get an array with each number as an element of that array
+			for(var i=0; i<myNosString.length; i++){
+				myNosArr[i] = parseInt(myNosString[i]);
 			}
-		}
 
-		console.log("Alternate1", Alternate1, "Alternate2", Alternate2);
+			console.log("ccno", ccno, "myNosArr", myNosArr);
+			
+			//Find the second last digit that is 14th digit which will be at position 13 in the array
+			var Alternate1 = [], 
+				Alternate2 = [];
 
-		//Multiply every element by 2
-		var Alternate1Map = Alternate1.map(function(el){
-			return el * 2;
-		})
-
-		console.log("Alternate1Map", Alternate1Map);
-
-		var sum = 0;
-
-		//Find whether any values are 2 digits, if so make a seperate entity from them
-		for(var k=0; k<Alternate1Map.length; k++){
-			if(Alternate1Map[k] > 9){
-				sum += (Alternate1Map[k] - 1) % 9 + 1; //num % 9 is used but here num % 10 will also work since the multiplied number cannot be greater than 18. In case of 20 or beyond, % 9 is necessary 
-			}else{
-				sum += Alternate1Map[k];
+			for(var j = myNosArr.length-1, i=0, k=0; j>=0; j--){
+				if(j%2 !== 0){
+					Alternate1[i] = myNosArr[j];
+					i++;
+				}else{
+					Alternate2[k] = myNosArr[j];
+					k++;
+				}
 			}
-		}
 
-		for(var i=0; i<Alternate2.length; i++){
-			sum += Alternate2[i];
-			console.log("sum", sum);
-		}
+			console.log("Alternate1", Alternate1, "Alternate2", Alternate2);
 
-		if(sum % 10 == 0){
-			console.log("Its a valid credit card number");
-		}else{
-			console.log("Its NOT a valid credit card number");
+			//Multiply every element by 2
+			var Alternate1Map = Alternate1.map(function(el){
+				return el * 2;
+			})
+
+			console.log("Alternate1Map", Alternate1Map);
+
+			var sum = 0;
+
+			//Find whether any values are 2 digits, if so make a seperate entity from them
+			for(var k=0; k<Alternate1Map.length; k++){
+				if(Alternate1Map[k] > 9){
+					sum += (Alternate1Map[k] - 1) % 9 + 1; //num % 9 is used but here num % 10 will also work since the multiplied number cannot be greater than 18. In case of 20 or beyond, % 9 is necessary 
+				}else{
+					sum += Alternate1Map[k];
+				}
+			}
+
+			for(var i=0; i<Alternate2.length; i++){
+				sum += Alternate2[i];
+				console.log("sum", sum);
+			}
+
+			var numValidation = document.getElementById('numValidation');
+
+
+			if(sum % 10 == 0){
+				numValidation.innerHTML = "Its a valid credit card number";
+			}else{
+				numValidation.innerHTML = "Its NOT a valid credit card number";
+			}
 		}
 
 	</script>
