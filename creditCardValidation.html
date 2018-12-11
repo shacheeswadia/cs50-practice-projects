@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Credit Card Number Validation</title>
+</head>
+<body>
+
+	<!-- 
+		1. Enter a credit card number - 15 digits 
+		2. Starting from 2nd last digit, multiply every alternate number with 2
+		3. Add the results - in case of double digit number after multiplication of 2, add the digits
+		4. Add the remaining alternate numbers to the previously resulting sum 
+		5. If the final resulting sum is a number endind in zero, it is a valid credit card number
+	-->
+
+	<script type="text/javascript">
+		
+		var ccno = 242718907652866,
+		myNosString = ccno.toString(),
+		myNosArr = [];
+
+		//Get an array with each number as an element of that array
+		for(var i=0; i<myNosString.length; i++){
+			myNosArr[i] = parseInt(myNosString[i]);
+		}
+
+		console.log("myNosArr", myNosArr);
+		
+		//Find the second last digit that is 14th digit which will be at position 13 in the array
+		var Alternate1 = [], 
+			Alternate2 = [];
+
+		for(var j = myNosArr.length-1, i=0, k=0; j>=0; j--){
+			if(j%2 !== 0){
+				Alternate1[i] = myNosArr[j];
+				i++;
+			}else{
+				Alternate2[k] = myNosArr[j];
+				k++;
+			}
+		}
+
+		console.log("Alternate1", Alternate1, "Alternate2", Alternate2);
+
+		//Multiply every element by 2
+		var Alternate1Map = Alternate1.map(function(el){
+			return el * 2;
+		})
+
+		console.log("Alternate1Map", Alternate1Map);
+
+		var sum = 0;
+
+		//Find whether any values are 2 digits, if so make a seperate entity from them
+		for(var k=0; k<Alternate1Map.length; k++){
+			if(Alternate1Map[k] > 9){
+				sum += (Alternate1Map[k] - 1) % 9 + 1; //num % 9 is used but here num % 10 will also work since the multiplied number cannot be greater than 18. In case of 20 or beyond, % 9 is necessary 
+			}else{
+				sum += Alternate1Map[k];
+			}
+		}
+
+		for(var i=0; i<Alternate2.length; i++){
+			sum += Alternate2[i];
+			console.log("sum", sum);
+		}
+
+		if(sum % 10 == 0){
+			console.log("Its a valid credit card number");
+		}else{
+			console.log("Its NOT a valid credit card number");
+		}
+
+	</script>
+
+</body>
+</html>
