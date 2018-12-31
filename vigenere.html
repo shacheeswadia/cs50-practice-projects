@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vigenere Crypt</title>
+</head>
+<body>
+
+	<div>
+		<h4>Th Vigenere Cipher</h4>
+		<p>Enter a sentence and the word to encode the sentence</p>
+		<label for="plainText">Your sentence</label>
+		<input type="text" name="plaintext" id="plainText">
+		<label for="cipherKey">Your word</label>
+		<input type="text" name="cipherkey" id="cipherKey">
+		<input type="submit" name="submit" onclick="createCipher()">
+	</div>
+
+	<div>
+		<h4>The cipher text is: -</h4>
+		<p id="cipherText"></p>
+	</div>
+
+	<script type="text/javascript">
+		
+		function createCipher() {
+			var ptext = document.getElementById('plainText').value,
+			key = document.getElementById('cipherKey').value,
+			cipher = [],
+			ctext = "";
+
+			var SPACE_VAL = 32,
+			ASCII_VAL = 97,
+			BACK_TO_START_VAL = 26;
+
+			console.log("ptext", ptext[0], ptext.charCodeAt(0), "key", key);
+
+			for(var i=0, j=0; i<ptext.length; i++){
+
+				if(parseInt(ptext.charCodeAt(i)) == SPACE_VAL){
+					cipher[i] = parseInt(ptext.charCodeAt(i)); //32 - space 
+				}else{
+
+					cipher[i] = parseInt(ptext.charCodeAt(i)) + (parseInt(key.charCodeAt(j)) - ASCII_VAL);
+
+					if(cipher[i] > 122){
+						cipher[i] = cipher[i] - BACK_TO_START_VAL; //get the value back to start which is ascii code 97
+					}
+				}
+
+				ctext += String.fromCharCode(cipher[i]);
+			}
+
+			console.log("cipher", cipher, "ctext", ctext);
+
+			var cipherText = document.getElementById("cipherText");
+			cipherText.innerHTML = ctext;
+
+		}
+
+	</script>
+
+</body>
+</html>
