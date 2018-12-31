@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Caesar Encrypting</title>
+</head>
+<body>
+
+	<div>
+		<h4>The Caesar Cipher</h4>
+		<p>Enter a word and the key to encode the word</p>
+		<label for="plainText">Your word</label>
+		<input type="text" name="plaintext" id="plainText">
+		<label for="cipherKey">Your key</label>
+		<input type="number" name="cipherkey" id="cipherKey">
+		<input type="submit" name="submit" onclick="createCipher()">
+	</div>
+
+	<div>
+		<h4>The cipher text is: -</h4>
+		<p id="cipherText"></p>
+	</div>
+	
+
+	<script type="text/javascript">
+		
+		function createCipher() {
+			var ptext = document.getElementById('plainText').value,
+			key = document.getElementById('cipherKey').value,
+			cipher = [],
+			ctext = "";
+
+			console.log("ptext", ptext[0], ptext.charCodeAt(0), "key", key);
+
+			for(i=0; i<ptext.length; i++){
+				cipher[i] = parseInt(ptext.charCodeAt(i)) + parseInt(key);
+				if(cipher[i] > 122){
+					cipher[i] = cipher[i] - 26; //get the value back to start which is ascii code 99
+				}
+				ctext += String.fromCharCode(cipher[i]);
+			}
+
+			console.log("cipher", cipher, "ctext", ctext);
+
+			var cipherText = document.getElementById("cipherText");
+			cipherText.innerHTML = ctext;
+
+		}
+
+	</script>
+
+</body>
+</html>
