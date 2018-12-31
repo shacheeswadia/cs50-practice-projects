@@ -26,7 +26,8 @@
 			var ptext = document.getElementById('plainText').value,
 			key = document.getElementById('cipherKey').value,
 			cipher = [],
-			ctext = "";
+			ctext = "",
+			i=0;
 
 			var SPACE_VAL = 32,
 			ASCII_VAL = 97,
@@ -34,20 +35,48 @@
 
 			console.log("ptext", ptext[0], ptext.charCodeAt(0), "key", key);
 
-			for(var i=0, j=0; i<ptext.length; i++){
+			/*while(i<ptext.length){
 
-				if(parseInt(ptext.charCodeAt(i)) == SPACE_VAL){
-					cipher[i] = parseInt(ptext.charCodeAt(i)); //32 - space 
-				}else{
+				for(var j = 0; j<key.length; j++){
+					
+					if(parseInt(ptext.charCodeAt(i)) == SPACE_VAL){
+						cipher[i] = parseInt(ptext.charCodeAt(i)); //32 - space 
+					}else{
 
-					cipher[i] = parseInt(ptext.charCodeAt(i)) + (parseInt(key.charCodeAt(j)) - ASCII_VAL);
+						cipher[i] = parseInt(ptext.charCodeAt(i)) + (parseInt(key.charCodeAt(j)) - ASCII_VAL);
 
-					if(cipher[i] > 122){
-						cipher[i] = cipher[i] - BACK_TO_START_VAL; //get the value back to start which is ascii code 97
+						if(cipher[i] > 122){
+							cipher[i] = cipher[i] - BACK_TO_START_VAL; //get the value back to start which is ascii code 97
+						}
 					}
-				}
 
-				ctext += String.fromCharCode(cipher[i]);
+					ctext += String.fromCharCode(cipher[i]);
+
+					i++;
+
+				}
+			}*/
+
+			//Both while or for can be used
+
+			for(var i=0; i<ptext.length;){
+
+				for(var j = 0; j<key.length; j++){
+					
+					if(parseInt(ptext.charCodeAt(i)) == SPACE_VAL){
+						cipher[i] = parseInt(ptext.charCodeAt(i)); //32 - space 
+					}else{
+
+						cipher[i] = parseInt(ptext.charCodeAt(i)) + (parseInt(key.charCodeAt(j)) - ASCII_VAL);
+
+						if(cipher[i] > 122){
+							cipher[i] = cipher[i] - BACK_TO_START_VAL; //get the value back to start which is ascii code 97
+						}
+					}
+
+					ctext += String.fromCharCode(cipher[i]);
+					i++;
+				}
 			}
 
 			console.log("cipher", cipher, "ctext", ctext);
